@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Kills infinite process by force
+
+pkill -KILL -f "7-highlander"

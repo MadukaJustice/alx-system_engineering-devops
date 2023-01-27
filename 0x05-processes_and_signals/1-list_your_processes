@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Gets its own PID
+
+ps auxf
