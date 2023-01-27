@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Reads the "/etc/passwd" file outputs in a specified format
+
+file="/etc/passwd"
+
+while read -r line;
+do
+	echo "$line" | cut -d ':' -f 1,3,6
+done < "$file"
