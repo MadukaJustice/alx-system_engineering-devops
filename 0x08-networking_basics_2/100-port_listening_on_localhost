@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Listen for incoming connections on port 98 on localhost using netcat
+
+nc -l 98
