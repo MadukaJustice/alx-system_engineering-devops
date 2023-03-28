@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Fix issue by checking apache service status, run apache server
+
+sudo service apache2 status
+sudo service apache2 start
