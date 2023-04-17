@@ -12,4 +12,4 @@ sudo sed -i 's/80/8080/' /etc/nginx/sites-available/default
 
 # kill apache2 process to free up port 8080
 pkill apache2
-sudo -u nginx service nginx start
+sudo -u nginx service nginx strt
