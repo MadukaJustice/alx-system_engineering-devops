@@ -1,28 +1,32 @@
 #!/usr/bin/python3
-"""Returns to-do list information (progress) for a given employee ID."""
 
-import json
-import requests
+"""Queries a REST API to get information on employees' todos"""
+
+from requests import get
 from sys import argv
+import json
 
 
-if __name__ == "__main__":
+def getTodos():
+    """Gets an employee's todo data using an API"""
     url = "https://jsonplaceholder.typicode.com/"
+    user_url = "{}users".format(url)
+    response_user = get(user_url).json()
+    tasks_dict = {}
+    for user in response_user:
+        user_id = user.get("id")
+        username = user.get("username")
+        todo_url = "{}todos?userId={}".format(url, user_id)
+        response_todo = get(todo_url).json()
+        tasks_list = [{"username": "{}".format(username),
+                      "task": "{}".format(todo.get("title")),
+                       "completed": todo.get("completed")
+                       } for todo in response_todo]
+        tasks_dict["{}".format(user_id)] = tasks_list
+    path = "todo_all_employees.json"
+    with open(path, 'w') as file:
+        json.dump(tasks_dict, file)
 
-    users = requests.get(url + "users").json()
 
-    todos = requests.get(url + "todos").json()
-
-    to_json = {}
-    with open("todo_all_employees.json", "w") as f:
-        for u in users:
-            all_todos = []
-            for t in todos:
-                res = {
-                    "username": u.get("username"),
-                    "task": t.get("title"),
-                    "completed": t.get("completed")
-                }
-                all_todos.append(res)
-            to_json.update({str(u["id"]): all_todos})
-        json.dump(to_json, f)
+if __name__ == '__main__':
+    getTodos()
