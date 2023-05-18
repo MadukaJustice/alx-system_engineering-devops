@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# This script gracefully reloads Gunicorn without downtime
+
+# Check if Gunicorn is running and get its process id
+if pid=$(pgrep -x "gunicorn")
+then
+  # Send a HUP signal to the Gunicorn master process to reload the worker processes
+  kill -HUP $pid
+fi
